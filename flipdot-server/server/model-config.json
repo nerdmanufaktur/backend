@@ -14,7 +14,7 @@
     ]
   },
   "FlipdotApplication": {
-    "dataSource": null,
+    "dataSource": test,
     "public": true
   },
   "FlipdotApplicationSetting": {
