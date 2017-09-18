@@ -1,0 +1,59 @@
+{
+  "name": "Flipdot",
+  "base": "PersistedModel",
+  "idInjection": true,
+  "options": {
+    "validateUpsert": true
+  },
+  "properties": {
+    "certificateSerial": {
+      "type": "string",
+      "required": true
+    },
+    "mqttChannel": {
+      "type": "string",
+      "required": true
+    },
+    "boardHeight": {
+      "type": "date",
+      "required": true
+    },
+    "hardwareRevision": {
+      "type": "string",
+      "required": true
+    },
+    "softwareVersion": {
+      "type": "string",
+      "required": true
+    },
+    "lastOnline": {
+      "type": "date"
+    },
+    "isRunning": {
+      "type": "boolean",
+      "required": true,
+      "default": false
+    }
+  },
+  "validations": [],
+  "relations": {
+    "user": {
+      "type": "hasOne",
+      "model": "FlipdotUser",
+      "foreignKey": ""
+    },
+    "applicationQueueItems": {
+      "type": "hasMany",
+      "model": "FlipdotApplication",
+      "foreignKey": "",
+      "through": "FlipdotApplicationQueueItem"
+    },
+    "applicationInstances": {
+      "type": "hasMany",
+      "model": "FlipdotApplicationInstance",
+      "foreignKey": ""
+    }
+  },
+  "acls": [],
+  "methods": {}
+}

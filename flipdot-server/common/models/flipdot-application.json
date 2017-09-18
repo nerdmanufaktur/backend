@@ -1,0 +1,41 @@
+{
+  "name": "FlipdotApplication",
+  "base": "PersistedModel",
+  "idInjection": true,
+  "options": {
+    "validateUpsert": true
+  },
+  "properties": {
+    "name": {
+      "type": "string",
+      "required": true
+    },
+    "description": {
+      "type": "string",
+      "required": true
+    },
+    "developer": {
+      "type": "object",
+      "required": true
+    },
+    "path": {
+      "type": "string",
+      "required": true
+    },
+    "isVisibleInAppStore": {
+      "type": "boolean",
+      "required": true,
+      "default": false
+    }
+  },
+  "validations": [],
+  "relations": {
+    "settings": {
+      "type": "hasMany",
+      "model": "FlipdotApplicationSetting",
+      "foreignKey": ""
+    }
+  },
+  "acls": [],
+  "methods": {}
+}

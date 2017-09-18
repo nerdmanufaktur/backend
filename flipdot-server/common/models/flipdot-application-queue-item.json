@@ -1,0 +1,26 @@
+{
+  "name": "FlipdotApplicationQueueItem",
+  "base": "PersistedModel",
+  "idInjection": true,
+  "options": {
+    "validateUpsert": true
+  },
+  "properties": {
+    "queueLocation": {
+      "type": "number",
+      "required": true
+    },
+    "isInterruptable": {
+      "type": "boolean",
+      "required": true
+    },
+    "maxRuntime": {
+      "type": "number",
+      "required": true
+    }
+  },
+  "validations": [],
+  "relations": {},
+  "acls": [],
+  "methods": {}
+}

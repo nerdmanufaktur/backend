@@ -1,0 +1,41 @@
+{
+  "name": "FlipdotApplicationSetting",
+  "base": "PersistedModel",
+  "idInjection": true,
+  "options": {
+    "validateUpsert": true
+  },
+  "properties": {
+    "name": {
+      "type": "string",
+      "required": true
+    },
+    "description": {
+      "type": "string",
+      "required": true
+    },
+    "type": {
+      "type": "string",
+      "required": true
+    },
+    "defaultValue": {
+      "type": "string",
+      "required": true
+    },
+    "isNullable": {
+      "type": "boolean",
+      "required": true,
+      "default": false
+    }
+  },
+  "validations": [],
+  "relations": {
+    "enumerationItems": {
+      "type": "hasMany",
+      "model": "FlipdotApplicationSettingEnumerationItem",
+      "foreignKey": ""
+    }
+  },
+  "acls": [],
+  "methods": {}
+}

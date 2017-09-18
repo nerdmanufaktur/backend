@@ -1,0 +1,49 @@
+{
+  "name": "FlipdotUser",
+  "base": "PersistedModel",
+  "idInjection": true,
+  "options": {
+    "validateUpsert": true
+  },
+  "properties": {
+    "firstName": {
+      "type": "string",
+      "required": true
+    },
+    "lastName": {
+      "type": "string",
+      "required": true
+    },
+    "email": {
+      "type": "string",
+      "required": true
+    },
+    "password": {
+      "type": "string",
+      "required": true
+    },
+    "lastLogin": {
+      "type": "date"
+    },
+    "isAdmin": {
+      "type": "boolean",
+      "required": true,
+      "default": false
+    },
+    "isDeveloper": {
+      "type": "boolean",
+      "required": true,
+      "default": false
+    }
+  },
+  "validations": [],
+  "relations": {
+    "applications": {
+      "type": "hasMany",
+      "model": "FlipdotApplication",
+      "foreignKey": ""
+    }
+  },
+  "acls": [],
+  "methods": {}
+}

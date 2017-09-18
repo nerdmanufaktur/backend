@@ -1,0 +1,25 @@
+{
+  "name": "FlipdotApplicationInstance",
+  "base": "PersistedModel",
+  "idInjection": true,
+  "options": {
+    "validateUpsert": true
+  },
+  "properties": {
+    "uuid": {
+      "type": "string",
+      "required": true
+    }
+  },
+  "validations": [],
+  "relations": {
+    "settings": {
+      "type": "hasMany",
+      "model": "FlipdotApplicationSetting",
+      "foreignKey": "",
+      "through": "FlipdotApplicationInstanceSettingValue"
+    }
+  },
+  "acls": [],
+  "methods": {}
+}
