@@ -15,7 +15,7 @@
       "required": true
     },
     "boardHeight": {
-      "type": "date",
+      "type": "number",
       "required": true
     },
     "hardwareRevision": {
@@ -55,5 +55,6 @@
     }
   },
   "acls": [],
-  "methods": {}
+  "methods": {
+  }
 }

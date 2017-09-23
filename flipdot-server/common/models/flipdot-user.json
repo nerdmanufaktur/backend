@@ -1,6 +1,6 @@
 {
   "name": "FlipdotUser",
-  "base": "PersistedModel",
+  "base": "User",
   "idInjection": true,
   "options": {
     "validateUpsert": true
@@ -38,6 +38,11 @@
   },
   "validations": [],
   "relations": {
+    "flipdots": {
+      "type": "hasMany",
+      "model": "Flipdot",
+      "foreignKey": ""
+    },
     "applications": {
       "type": "hasMany",
       "model": "FlipdotApplication",
