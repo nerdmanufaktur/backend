@@ -20,7 +20,7 @@
     },
     "defaultValue": {
       "type": "string",
-      "required": true
+      "required": false
     },
     "isNullable": {
       "type": "boolean",

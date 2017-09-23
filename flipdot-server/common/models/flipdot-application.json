@@ -14,10 +14,6 @@
       "type": "string",
       "required": true
     },
-    "developer": {
-      "type": "object",
-      "required": true
-    },
     "path": {
       "type": "string",
       "required": true
@@ -33,6 +29,11 @@
     "settings": {
       "type": "hasMany",
       "model": "FlipdotApplicationSetting",
+      "foreignKey": ""
+    },
+    "developer": {
+      "type": "hasOne",
+      "model": "FlipdotUser",
       "foreignKey": ""
     }
   },

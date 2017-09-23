@@ -18,6 +18,11 @@
       "model": "FlipdotApplicationSetting",
       "foreignKey": "",
       "through": "FlipdotApplicationInstanceSettingValue"
+    },
+    "flipdot": {
+      "type": "hasOne",
+      "model": "Flipdot",
+      "foreignKey": ""
     }
   },
   "acls": [],

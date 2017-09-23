@@ -36,6 +36,8 @@
       "default": false
     }
   },
+  "restrictResetPasswordTokenScope": true,
+  "emailVerificationRequired": false,
   "validations": [],
   "relations": {
     "flipdots": {

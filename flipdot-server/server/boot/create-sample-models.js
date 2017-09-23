@@ -8,6 +8,9 @@ module.exports = function(app) {
     users: async.apply(createUsers),
   }, function(err, results) {
     if (err) throw err;
+    createApplications(results.users, function(err) {
+      console.log('> models created sucessfully');
+    });
     createFlipdots(results.users, function(err) {
       console.log('> models created sucessfully');
     });
@@ -52,7 +55,7 @@ module.exports = function(app) {
         users[0].updateAttributes({flipdotId: flipdots[0].id});
         users[0].updateAttributes({flipdotId: flipdots[2].id});
         users[2].updateAttributes({flipdotId: flipdots[0].id});
-        console.log('Models created: \n USERS:\n', users, '\n FLIPDOTS:\n', flipdots);
+        console.log('\n USERS: \n', users, '\n FLIPDOTS: \n', flipdots);
       });
     });
   }
@@ -65,7 +68,8 @@ module.exports = function(app) {
         firstName: "Horst",
         lastName: "Evers",
         email: 'foo@bar.com',
-        password: 'foobar'
+        password: 'foobar',
+        isDeveloper: true
       }, {
         firstName: "Günter",
         lastName: "Evers",
@@ -77,6 +81,50 @@ module.exports = function(app) {
         email: 'jane@doe.com',
         password: 'janedoe'
       }], cb);
+    });
+  }
+
+  //create applications and settings
+  function createApplications(users, cb) {
+    dataSource.automigrate('FlipdotApplication', function(err) {
+      if (err) return cb(err);
+      app.models.FlipdotApplication.create([{
+        name: "Email",
+        description: "See your latest email subjects.",
+        flipdotUserId: users[0].id,
+        path: 'common/apps/email.js',
+        "isVisibleInAppStore": true
+      }], function(err, apps) {
+        if (err) throw err;
+        console.log('Models created: \n APPS: \n', apps);
+      });
+    });
+
+
+    dataSource.automigrate('FlipdotApplicationSetting', function(err) {
+      if (err) return cb(err);
+      app.models.FlipdotApplicationSetting.create([{
+          name: "mailserver",
+          description: "mailserver",
+          type: "web address",
+          defaultValue: "",
+          isNullable: false
+      }, {
+          name: "refresh_rate",
+          description: "time in minutes for refresh",
+          type: "integer",
+          defaultValue: "15",
+          isNullable: false
+      }, {
+          name: "mailserver",
+          description: "mailserver",
+          type: "web address",
+          defaultValue: "",
+          isNullable: false
+      }], function(err, settings) {
+        if (err) throw err;
+        console.log('\n Settings: \n', settings);
+      });
     });
   }
 };

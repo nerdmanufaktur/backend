@@ -25,6 +25,25 @@
     "dataSource": "test",
     "public": true
   },
+  "AccessToken": {
+    "dataSource": "test",
+    "public": false
+  },
+  "ACL": {
+    "dataSource": "test",
+    "public": false
+  },
+  "RoleMapping": {
+    "dataSource": "test",
+    "public": false,
+    "options": {
+      "strictObjectIDCoercion": true
+    }
+  },
+  "Role": {
+    "dataSource": "test",
+    "public": false
+  },
   "Flipdot": {
     "dataSource": "test",
     "public": true

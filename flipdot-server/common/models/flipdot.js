@@ -2,6 +2,10 @@
 
 module.exports = function(Flipdot) {
 
+
+  /**
+ * Start the flipdot application queue. If the flipdot is already running an error will be thrown.
+ */
   Flipdot.prototype.start = function(next){
 
     if(this.isRunning) {
@@ -15,6 +19,9 @@ module.exports = function(Flipdot) {
     next(null, this);
   }
 
+  /**
+ * Stop the flipdot application queue. If the flipdot is already stopped an error will be thrown.
+ */
   Flipdot.prototype.stop = function(next){
 
     if(!this.isRunning) {
@@ -37,5 +44,15 @@ module.exports = function(Flipdot) {
             accepts: [],
             returns: {arg: 'flipdot', type: 'Flipdot'}
   });
+
+  /**
+ * Render the next app in the Application Queue
+ */
+  Flipdot.prototype.renderApplication = function(next){
+
+    
+    next(null);
+  }
+
 
 };
