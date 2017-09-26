@@ -9,10 +9,13 @@ module.exports = function(app) {
   }, function(err, results) {
     if (err) throw err;
     createApplications(results.users, function(err) {
-      console.log('> models created sucessfully');
+      console.log('> Apps created sucessfully');
     });
     createFlipdots(results.users, function(err) {
-      console.log('> models created sucessfully');
+      console.log('> Flipdots created sucessfully');
+    });
+    createAdmin(results.users, function(err) {
+      console.log('> Admin created sucessfully');
     });
   });
 
@@ -127,4 +130,31 @@ module.exports = function(app) {
       });
     });
   }
+
+  //create admin role and assigning it
+  function createAdmin(users, cb) {
+    dataSource.automigrate('FlipdotApplicationSetting', function(err) {
+      if (err) return cb(err);
+      //...
+      // Create projects, assign project owners and project team members
+      //...
+      // Create the admin role
+      app.models.Role.create({
+        name: 'admin'
+      }, function(err, role) {
+        if (err) return cb(err);
+        cb(role);
+
+        // Make Bob an admin
+        role.principals.create({
+          principalType: app.models.RoleMapping.USER,
+          principalId: users[0].id
+        }, function(err, principal) {
+          if (err) return cb(err);
+          cb(principal);
+        });
+      });
+    });
+  };
+
 };

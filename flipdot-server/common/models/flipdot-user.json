@@ -5,6 +5,8 @@
   "options": {
     "validateUpsert": true
   },
+  "restrictResetPasswordTokenScope": true,
+  "emailVerificationRequired": false,
   "properties": {
     "firstName": {
       "type": "string",
@@ -36,8 +38,6 @@
       "default": false
     }
   },
-  "restrictResetPasswordTokenScope": true,
-  "emailVerificationRequired": false,
   "validations": [],
   "relations": {
     "flipdots": {
@@ -51,6 +51,31 @@
       "foreignKey": ""
     }
   },
-  "acls": [],
+  "acls": [
+    {
+      "accessType": "WRITE",
+      "principalType": "ROLE",
+      "principalId": "admin",
+      "permission": "ALLOW"
+    },
+    {
+      "accessType": "READ",
+      "principalType": "ROLE",
+      "principalId": "$owner",
+      "permission": "ALLOW"
+    },
+    {
+      "accessType": "*",
+      "principalType": "ROLE",
+      "principalId": "admin",
+      "permission": "ALLOW"
+    },
+    {
+      "accessType": "*",
+      "principalType": "ROLE",
+      "principalId": "$everyone",
+      "permission": "DENY"
+    }
+  ],
   "methods": {}
 }

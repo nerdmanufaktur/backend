@@ -2,6 +2,5 @@
   "loopback-component-explorer": {
     "mountPath": "/explorer",
     "generateOperationScopedModels": true
-  },
-  "loopback-component-jsonapi": {}
+  }
 }

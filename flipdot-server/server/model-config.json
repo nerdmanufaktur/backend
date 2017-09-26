@@ -25,6 +25,10 @@
     "dataSource": "test",
     "public": true
   },
+  "User": {
+    "dataSource": "test",
+    "public": false
+  },
   "AccessToken": {
     "dataSource": "test",
     "public": false
