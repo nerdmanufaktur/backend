@@ -7,16 +7,19 @@ module.exports = function(Flipdot) {
  * Start the flipdot application queue. If the flipdot is already running an error will be thrown.
  */
   Flipdot.prototype.start = function(next){
-
     if(this.isRunning) {
       const err = new Error(
       'Flipdot is already running.');
       err.statusCode = 401;
       err.code = 'FLIPDOT_ALREADY_RUNNING';
       next(err);
+  } else {
+        var Scheduler = require('../../server/scheduler.js');
+        var schedulerInstance = new Scheduler(this);
+        this.updateAttributes({isRunning: true});
+        schedulerInstance.start();
+        next(null, this);
     }
-    this.updateAttributes({isRunning: true});
-    next(null, this);
   }
 
   /**
@@ -50,7 +53,7 @@ module.exports = function(Flipdot) {
  */
   Flipdot.prototype.renderApplication = function(next){
 
-    
+
     next(null);
   }
 
