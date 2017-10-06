@@ -1,5 +1,7 @@
 'use strict';
 
+var Scheduler = require('../../server/scheduler.js');
+
 module.exports = function(Flipdot) {
 
 
@@ -14,10 +16,16 @@ module.exports = function(Flipdot) {
       err.code = 'FLIPDOT_ALREADY_RUNNING';
       next(err);
   } else {
-        var Scheduler = require('../../server/scheduler.js');
-        var schedulerInstance = new Scheduler(this);
-        this.updateAttributes({isRunning: true});
-        schedulerInstance.start();
+        Flipdot.findById(this.id, {
+          include: 'applicationQueueItems'
+        }, function(err, flipdot) {
+          flipdot.updateAttributes({isRunning: true}, function(err, flip) {
+            var schedulerInstance = new Scheduler(flip);
+            console.log("Starting scheduler for flipdot id", flip.id);
+            schedulerInstance.start();
+          });
+        });
+
         next(null, this);
     }
   }

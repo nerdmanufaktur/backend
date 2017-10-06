@@ -33,7 +33,7 @@ module.exports = function(app) {
         hardwareRevision: '2.0',
         softwareVersion: '1.0',
         lastOnline: Date.now() - (DAY_IN_MILLISECONDS * 4),
-        isRunning: true,
+        isRunning: false,
         flipdotUserId: users[0].id
       }, {
         certificateSerial: 'FGHIJ',
@@ -51,7 +51,7 @@ module.exports = function(app) {
         hardwareRevision: '1.0',
         softwareVersion: '1.2',
         lastOnline: Date.now() - (DAY_IN_MILLISECONDS * 2),
-        isRunning: true,
+        isRunning: false,
         flipdotUserId: users[2].id
       }, ], function(err, flipdots) {
         if (err) throw err;
@@ -87,7 +87,7 @@ module.exports = function(app) {
     });
   }
 
-  //create applications and settings
+  //create applications and settings and add Apps to FlipdotApplicationQueue
   function createApplications(users, cb) {
     dataSource.automigrate('FlipdotApplication', function(err) {
       if (err) return cb(err);
@@ -97,36 +97,82 @@ module.exports = function(app) {
         flipdotUserId: users[0].id,
         path: 'common/apps/email.js',
         "isVisibleInAppStore": true
+      }, {
+        name: "Twitter",
+        description: "See your latest tweets.",
+        flipdotUserId: users[2].id,
+        path: 'common/apps/twitter.js',
+        "isVisibleInAppStore": false
       }], function(err, apps) {
         if (err) throw err;
+
+        app.models.FlipdotApplicationQueueItem.create([{
+            queueLocation: 1,
+            isInterruptable: true,
+            maxRuntime: 30,
+            flipdotApplicationId: apps[0].id,
+            flipdotId: 1
+        }, {
+            queueLocation: 2,
+            isInterruptable: true,
+            maxRuntime: 18,
+            flipdotApplicationId: apps[1].id,
+            flipdotId: 1
+        }, {
+            queueLocation: 3,
+            isInterruptable: false,
+            maxRuntime: 50,
+            flipdotApplicationId: apps[0].id,
+            flipdotId: 1
+        }, {
+            queueLocation: 1,
+            isInterruptable: true,
+            maxRuntime: 30,
+            flipdotApplicationId: apps[0].id,
+            flipdotId: 3
+        }, {
+            queueLocation: 2,
+            isInterruptable: true,
+            maxRuntime: 18,
+            flipdotApplicationId: apps[1].id,
+            flipdotId: 3
+        }, {
+            queueLocation: 3,
+            isInterruptable: false,
+            maxRuntime: 50,
+            flipdotApplicationId: apps[0].id,
+            flipdotId: 3
+        }], function(err, settings) {
+          if (err) throw err;
+          console.log('\n Settings: \n', settings);
+        });
+
+        app.models.FlipdotApplicationSetting.create([{
+            name: "mailserver",
+            description: "mailserver",
+            type: "web address",
+            defaultValue: "",
+            isNullable: false,
+            flipdotApplicationId: apps[0].id
+        }, {
+            name: "refresh_rate",
+            description: "time in minutes for refresh",
+            type: "integer",
+            defaultValue: "15",
+            isNullable: false,
+            flipdotApplicationId: apps[0].id
+        }, {
+            name: "mailserver",
+            description: "mailserver",
+            type: "web address",
+            defaultValue: "",
+            isNullable: false,
+            flipdotApplicationId: apps[1].id
+        }], function(err, settings) {
+          if (err) throw err;
+          console.log('\n Settings: \n', settings);
+        });
         console.log('Models created: \n APPS: \n', apps);
-      });
-    });
-
-
-    dataSource.automigrate('FlipdotApplicationSetting', function(err) {
-      if (err) return cb(err);
-      app.models.FlipdotApplicationSetting.create([{
-          name: "mailserver",
-          description: "mailserver",
-          type: "web address",
-          defaultValue: "",
-          isNullable: false
-      }, {
-          name: "refresh_rate",
-          description: "time in minutes for refresh",
-          type: "integer",
-          defaultValue: "15",
-          isNullable: false
-      }, {
-          name: "mailserver",
-          description: "mailserver",
-          type: "web address",
-          defaultValue: "",
-          isNullable: false
-      }], function(err, settings) {
-        if (err) throw err;
-        console.log('\n Settings: \n', settings);
       });
     });
   }

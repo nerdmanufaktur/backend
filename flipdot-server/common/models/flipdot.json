@@ -44,9 +44,8 @@
     },
     "applicationQueueItems": {
       "type": "hasMany",
-      "model": "FlipdotApplication",
-      "foreignKey": "",
-      "through": "FlipdotApplicationQueueItem"
+      "model": "FlipdotApplicationQueueItem",
+      "foreignKey": ""
     },
     "applicationInstances": {
       "type": "hasMany",
