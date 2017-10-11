@@ -103,44 +103,50 @@ module.exports = function(app) {
         flipdotUserId: users[2].id,
         path: 'common/apps/twitter.js',
         "isVisibleInAppStore": false
+      }, {
+        name: "Pornhub",
+        description: "See your latest porn.",
+        flipdotUserId: users[2].id,
+        path: 'common/apps/japaneseporn.js',
+        "isVisibleInAppStore": true
       }], function(err, apps) {
         if (err) throw err;
 
         app.models.FlipdotApplicationQueueItem.create([{
             queueLocation: 1,
             isInterruptable: true,
-            maxRuntime: 30,
+            maxRuntime: 500,
             flipdotApplicationId: apps[0].id,
             flipdotId: 1
         }, {
             queueLocation: 2,
             isInterruptable: true,
-            maxRuntime: 18,
+            maxRuntime: 200,
             flipdotApplicationId: apps[1].id,
             flipdotId: 1
         }, {
             queueLocation: 3,
             isInterruptable: false,
-            maxRuntime: 50,
+            maxRuntime: 800,
             flipdotApplicationId: apps[0].id,
             flipdotId: 1
         }, {
             queueLocation: 1,
             isInterruptable: true,
-            maxRuntime: 30,
+            maxRuntime: 800,
             flipdotApplicationId: apps[0].id,
             flipdotId: 3
         }, {
             queueLocation: 2,
             isInterruptable: true,
-            maxRuntime: 18,
-            flipdotApplicationId: apps[1].id,
+            maxRuntime: 300,
+            flipdotApplicationId: apps[2].id,
             flipdotId: 3
         }, {
             queueLocation: 3,
             isInterruptable: false,
-            maxRuntime: 50,
-            flipdotApplicationId: apps[0].id,
+            maxRuntime: 500,
+            flipdotApplicationId: apps[1].id,
             flipdotId: 3
         }], function(err, settings) {
           if (err) throw err;

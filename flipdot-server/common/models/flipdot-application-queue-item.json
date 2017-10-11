@@ -20,7 +20,13 @@
     }
   },
   "validations": [],
-  "relations": {},
+  "relations": {
+    "flipdotApplication": {
+      "type": "belongsTo",
+      "model": "FlipdotApplication",
+      "foreignKey": ""
+    }
+  },
   "acls": [
     {
       "accessType": "WRITE",

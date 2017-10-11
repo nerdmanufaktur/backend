@@ -1,34 +1,48 @@
 var queue = require('queue')
 
-function Scheduler(flipdot) {
+/*
+ * Create a scheduler for executing flipdot apps. Give a flipdot with included applicationQueueItems
+ * and therein each included the application.
+ * Also pass the global LoopBack app object.
+*/
+function Scheduler(flipdot, app) {
     this.flipdot = flipdot;
     this.counter = 0;
     this.appQueue = queue();
+    this.app = app
     var userAppQueueConfig = flipdot.applicationQueueItems();
-    if(userAppQueueConfig.length == 0) {
-
-    } else {
-        for(var i = 0; i < userAppQueueConfig.length; i++) {
-              this.appQueue.push(userAppQueueConfig[i]);
-        }
-        console.log(this.appQueue);
-    }
+    userAppQueueConfig.forEach(function(config) {
+          this.appQueue.push(config)
+    }.bind(this))
 }
 
-//starts looping through the render queue as long as isRunning bit is set to true
+/*
+ * Starts looping through the render queue as long as isRunning bit is set to true
+*/
 Scheduler.prototype.start = function() {
-    setTimeout(this.schedule.bind(this), 0);
+    setTimeout(this.schedule.bind(this), 0)
 }
 
+/*
+ * Executes last item in queue and enqueues item in front of queue again.
+ * Calls itself with a timeout of maxRuntime set in FlipdotApplicationQueueItem
+*/
 Scheduler.prototype.schedule = function() {
     this.flipdot.reload(function (err, flipdot) {
-        this.counter++;
-        console.log(this.counter);
         if (flipdot.isRunning) {
-            console.log('Hello world!\n');
-            setTimeout(this.schedule.bind(this), 500);
+            var currentAppConfig = this.appQueue.shift()
+            console.log('Executing on iteration ', this.counter, ' on flipdot: ', this.flipdot.id, ' (', currentAppConfig.flipdotApplication().name, ')')
+            this.counter++;
+            this.appQueue.push(currentAppConfig)
+            setTimeout(this.schedule.bind(this), currentAppConfig.maxRuntime)
+        } else {
+            console.log('Stopped executing on flipdot ', this.flipdot.id)
         }
-    }.bind(this));
+    }.bind(this))
+  }
+
+Scheduler.executeApp = function (app, cb) {
+  cb()
 }
 
 module.exports =  Scheduler;
