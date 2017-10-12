@@ -1,19 +1,22 @@
 'use strict';
 
 
-var app = require('../../server/server'); //require `server.js` as in any node.js app
+var app = require('../../server/server')
 
 module.exports = function(Flipdotapplication) {
 
-  /*Flipdotapplication.observe("before save", function enforeceDeveloperOnly(ctx, next) {
-    const err = new Error(
-    "User isn't developer");
-    err.statusCode = 401;
-    err.code = 'USER_NOT_DEVELOPER';
-    console.log(ctx.instance);
-    const dev = ctx.instance.developer;
-    console.log(dev);
-    if(!ctx.instance.developer.isDeveloper) next(err);
-    next();
-});*/
-};
+  // enforce that only a developer can upload apps
+  Flipdotapplication.validateAsync('flipdotUserId', validateUserIsDeveloper, {message: "user isn't developer"})
+  Flipdotapplication.validatesUniquenessOf('name')
+  Flipdotapplication.validatesUniquenessOf('path')
+  Flipdotapplication.validatesUniquenessOf('description')
+
+}
+
+function validateUserIsDeveloper(err, done) {
+  app.models.FlipdotUser.findById(this.flipdotUserId, function(find_err, appDeveloper) {
+      if(!appDeveloper.isDeveloper) err()
+
+      done()
+  })
+}

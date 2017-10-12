@@ -31,10 +31,10 @@
       "model": "FlipdotApplicationSetting",
       "foreignKey": ""
     },
-    "developer": {
-      "type": "hasOne",
+    "flipdotUser": {
+      "type": "belongsTo",
       "model": "FlipdotUser",
-      "foreignKey": ""
+      "foreignKey": "flipdotUserId"
     }
   },
   "acls": [

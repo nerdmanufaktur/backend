@@ -82,7 +82,8 @@ module.exports = function(app) {
         firstName: "Marc Uwe",
         lastName: "Kling",
         email: 'jane@doe.com',
-        password: 'janedoe'
+        password: 'janedoe',
+        isDeveloper: true
       }], cb);
     });
   }
