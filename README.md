@@ -5,8 +5,13 @@ For editing install [loopback](https://www.loopback.io) with terminal command `n
 Then run the following commands
 
 - `cd flipdot-server`
-- `node .`
+- `npm start`.
 
-and view the API on [http://localhost:3000/explorer](http://localhost:3000/explorer)
+and explore the API on [http://localhost:3000/explorer](http://localhost:3000/explorer).
+
+Test the REST-API with
+
+- `npm test`.
+
 
 (npm v5.3.0, node v8.5.0) installed
