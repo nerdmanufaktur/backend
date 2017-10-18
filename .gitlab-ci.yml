@@ -13,9 +13,11 @@ cache:
     - node_modules/
 
 test:vulns:
+  script:
     - npm run vulns
 
 test:lint:
+  script:
     - npm run lint
 
 test:node:8.5:
