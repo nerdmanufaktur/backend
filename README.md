@@ -13,5 +13,12 @@ Test the REST-API with
 
 - `npm test`.
 
+Lint checking with
+
+- `npm run lint`.
+
+Vulnerability checking with
+
+- `npm run vulns`.
 
 (npm v5.3.0, node v8.5.0) installed
