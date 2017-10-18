@@ -6,10 +6,10 @@
     "node": ">=4"
   },
   "scripts": {
-    "lint": "eslint . --fix",
+    "lint": "eslint .",
     "start": "node .",
     "test": "mocha",
-    "posttest": "npm run lint && nsp check"
+    "vulns": "nsp check"
   },
   "dependencies": {
     "compression": "^1.0.3",

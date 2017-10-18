@@ -190,7 +190,7 @@ describe('REST API request', function() {
       });
   });
 
-  it("shouldn't be able to create FlipdotApplicationQueueItems with non unique queuePositions",
+  it('queuePositions of FlipdotApplicationQueueItems must be unique',
   function(done) {
     var appItem1 = {
       'queueLocation': 1,
