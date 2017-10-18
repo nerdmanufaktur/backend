@@ -10,7 +10,7 @@ module.exports = function(Flipdotapplicationqueueitem) {
   function validateQueueLocationUniqueness(err, done) {
     Flipdotapplicationqueueitem.find({where: {
       flipdotId: this.flipdotId,
-      queueLocation: this.queueLocation
+      queueLocation: this.queueLocation,
     }}, function(findErr, queueItems) {
       if (queueItems.length > 0) {
         err();
