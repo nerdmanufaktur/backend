@@ -172,7 +172,8 @@ describe('REST API request', function() {
       });
   });
 
-  it("shouldn't be able to create apps with non admin user as developer", function(done) {
+  it("shouldn't be able to create apps with non admin user as developer",
+  function(done) {
     var app = {
       'name': 'generic again',
       'description': 'lol rofl',
@@ -189,7 +190,8 @@ describe('REST API request', function() {
       });
   });
 
-  it("shouldn't be able to create FlipdotApplicationQueueItems with non unique queuePositions", function(done) {
+  it("shouldn't be able to create FlipdotApplicationQueueItems with non unique queuePositions",
+  function(done) {
     var appItem1 = {
       'queueLocation': 1,
       'isInterruptable': false,
@@ -222,6 +224,30 @@ describe('REST API request', function() {
       .expect(200, function(err, res) {
         assertRespondsApplicationQueueItem(res.body);
         done();
+      });
+  });
+
+  it('should log last time a user logged in',
+  function(done) {
+    var credentials = {
+      'email': 'jane@doe.com',
+      'password': 'janedoe',
+    };
+    jsonData('get',
+    '/api/flipdotusers/3')
+      .expect(200, function(err, res) {
+        assert.equal(res.body.lastLogin, null);
+      });
+    jsonData('post',
+    '/api/flipdotusers/login', credentials)
+      .expect(200, function(err, res) {
+        assertRespondsUserAccessToken(res.body);
+        jsonData('get',
+        '/api/flipdotusers/3')
+          .expect(200, function(err2, res2) {
+            assert.equal(res2.body.lastLogin, res.body.created);
+            done();
+          });
       });
   });
 });
@@ -262,4 +288,11 @@ function assertRespondsFlipdot(body) {
 function assertRespondsApplicationQueueItem(body) {
   assert(body.queueLocation);
   assert(body.maxRuntime);
+}
+
+function assertRespondsUserAccessToken(body) {
+  assert(body.id);
+  assert(body.ttl);
+  assert(body.created);
+  assert(body.userId);
 }

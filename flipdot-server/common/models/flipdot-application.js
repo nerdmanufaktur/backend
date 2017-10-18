@@ -3,7 +3,6 @@
 var app = require('../../server/server');
 
 module.exports = function(Flipdotapplication) {
-  // enforce that only a developer can upload apps
   Flipdotapplication.validateAsync('flipdotUserId', validateUserIsDeveloper,
     {message: "user isn't developer"});
   Flipdotapplication.validatesUniquenessOf('name');
@@ -11,6 +10,9 @@ module.exports = function(Flipdotapplication) {
   Flipdotapplication.validatesUniquenessOf('description');
 };
 
+/*
+ * Enforce that only a developer can upload apps
+*/
 function validateUserIsDeveloper(err, done) {
   app.models.FlipdotUser.findById(this.flipdotUserId,
     function(findErr, appDeveloper) {
