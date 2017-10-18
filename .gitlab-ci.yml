@@ -6,12 +6,6 @@ before_script:
   - cd flipdot-server
   - npm install
 
-# This folder is cached between builds
-# http://docs.gitlab.com/ce/ci/yaml/README.html#cache
-cache:
-  paths:
-    - node_modules/
-
 test:vulns:
   script:
     - npm run vulns
