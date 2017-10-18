@@ -250,6 +250,47 @@ describe('REST API request', function() {
           });
       });
   });
+
+  it('mqttChannel/certificateSerial should be unique',
+  function(done) {
+    var flipdot1 = {
+      certificateSerial: 'abc',
+      mqttChannel: 'same/same',
+      boardHeight: '16',
+      hardwareRevision: '1.0',
+      softwareVersion: '1.2',
+      lastOnline: Date.now(),
+      isRunning: false,
+      flipdotUserId: 1,
+    };
+    var flipdot2 = {
+      certificateSerial: 'def',
+      mqttChannel: 'same/same',
+      boardHeight: '16',
+      hardwareRevision: '1.0',
+      softwareVersion: '1.2',
+      lastOnline: Date.now(),
+      isRunning: false,
+      flipdotUserId: 1,
+    };
+    jsonData('post',
+    '/api/flipdots', flipdot1)
+      .expect(200, function(err, res) {
+        jsonData('post',
+        '/api/flipdots', flipdot2)
+          .expect(422, function(err2, res2) {
+            assert.equal(res2.body.error.statusCode, 422);
+            assert.equal(res2.body.error.name, 'ValidationError');
+            flipdot2.mqttChannel = "different/different";
+            jsonData('post',
+            '/api/flipdots', flipdot2)
+              .expect(200, function(err3, res3) {
+                assertRespondsFlipdot(res3.body);
+                done();
+            });
+        });
+      });
+  });
 });
 
 describe('Unexpected Usage', function() {
