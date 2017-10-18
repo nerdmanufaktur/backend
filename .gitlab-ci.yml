@@ -12,16 +12,7 @@ cache:
   paths:
     - node_modules/
 
-test:lint:
-  script:
-    - npm run lint
-
-test:vulnerabilities:
-  script:
-    - npm run vuln-test
-
 test:node:8.5:
   script:
     - npm install -g codecov
-    - npm run build
     - npm test && codecov
