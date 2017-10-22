@@ -4,7 +4,10 @@ var app = require('../../server/server');
 var Scheduler = require('../../server/scheduler.js');
 
 module.exports = function(Flipdot) {
-  Flipdot.validatesUniquenessOf('mqttChannel', {message: 'mqttChannel not unique'});
+  Flipdot.validatesUniquenessOf(
+    'mqttChannel',
+    {message: 'mqttChannel not unique'}
+  );
   Flipdot.validatesUniquenessOf('certificateSerial');
 
   /*

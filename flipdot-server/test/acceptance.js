@@ -281,14 +281,14 @@ describe('REST API request', function() {
           .expect(422, function(err2, res2) {
             assert.equal(res2.body.error.statusCode, 422);
             assert.equal(res2.body.error.name, 'ValidationError');
-            flipdot2.mqttChannel = "different/different";
+            flipdot2.mqttChannel = 'different/different';
             jsonData('post',
             '/api/flipdots', flipdot2)
               .expect(200, function(err3, res3) {
                 assertRespondsFlipdot(res3.body);
                 done();
-            });
-        });
+              });
+          });
       });
   });
 });
